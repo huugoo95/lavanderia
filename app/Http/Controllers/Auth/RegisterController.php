@@ -56,17 +56,28 @@ class RegisterController extends Controller
     }
 
     /**
+     * Return a register view
+     *
+     * @param  array  $data
+     * @return \App\User
+     */
+    protected function create()
+    {
+        return view('register');
+    }
+    /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+    protected function store()
     {
-        return User::create([
+        print_r($_POST);
+        /*return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-        ]);
+        ]);*/
     }
 }

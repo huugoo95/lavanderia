@@ -17,3 +17,6 @@ Route::get('/', function () {
 Route::get('login', function () {
     return view('login');
 });
+
+Route::get('/register', 'Auth\RegisterController@create');
+Route::post('/register', 'Auth\RegisterController@store');
