@@ -16,6 +16,9 @@ class CreateInvoicesTable extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
+            $table->integer("week_number");
+            $table->integer("year");
+            $table->boolean ("occasional")->default(true);
         });
     }
 
