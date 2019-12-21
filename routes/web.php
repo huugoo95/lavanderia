@@ -20,3 +20,5 @@ Route::get('login', function () {
 
 Route::get('/register', 'Auth\RegisterController@create');
 Route::post('/register', 'Auth\RegisterController@store');
+
+Route::get('/users', 'UserController@show');

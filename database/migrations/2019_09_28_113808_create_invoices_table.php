@@ -16,9 +16,11 @@ class CreateInvoicesTable extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->integer("week_number");
-            $table->integer("year");
-            $table->boolean ("occasional")->default(true);
+            $table->integer('service_id');
+            $table->integer('customer_id');
+            $table->foreign('service_id')->references('id')->on('services');
+            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->boolean("occasional")->default(true);
         });
     }
 
