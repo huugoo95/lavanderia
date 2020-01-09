@@ -22,3 +22,5 @@ Route::get('/register', 'Auth\RegisterController@create');
 Route::post('/register', 'Auth\RegisterController@store');
 
 Route::get('/users', 'UserController@show');
+
+Route::resource('customers', 'CustomerController');
