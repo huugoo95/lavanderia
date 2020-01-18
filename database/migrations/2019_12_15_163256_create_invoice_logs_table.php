@@ -14,11 +14,14 @@ class CreateInvoiceLogsTable extends Migration
     public function up()
     {
         Schema::create('invoice_logs', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->timestamps();
             $table->integer("week_number");
             $table->integer("year");
-            $table->integer("invoice_id");
+            $table->integer("invoice_id")->unsigned();
+        });
+
+        Schema::table('invoice_logs', function($table) {            
             $table->foreign('invoice_id')->references('id')->on('invoices');
         });
     }
