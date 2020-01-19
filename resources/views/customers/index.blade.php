@@ -12,6 +12,12 @@
       {{ session()->get('success') }}  
     </div><br />
   @endif
+  <div class="d-flex justify-content-between">
+    <a  class="btn btn-secondary"  href="{{ route('index') }}">Menú principal</a>
+    <a  class="btn btn-success" href="{{ route('customers.create') }}">Añadir cliente</a>
+  </div>
+  <br>
+ 
   <table class="table table-striped">
     <thead>
         <tr>

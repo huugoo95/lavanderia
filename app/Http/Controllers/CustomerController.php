@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CustomerRequest;
 use App\Customer;
 
 class CustomerController extends Controller
@@ -22,22 +23,19 @@ class CustomerController extends Controller
         return view('customers/create');
     }
 
-    protected function store(Request $request){
-        /*$request->validate([
-            'customer_name'=>'required',
-            'customer_cif'=>'required',
-            'customer_email'=> 'required|integer',
-            'share_qty' => 'required|integer'
-          ]);*/
-          $customer = new Customer([
+    protected function store(CustomerRequest $request)
+    {
+        $validated = $request->validated();
+    
+        $customer = new Customer([
             'name' => $request->get('customer_name'),
             'cif'=> $request->get('customer_cif'),
             'email'=> $request->get('customer_email'),
             'address'=> $request->get('customer_address'),
             'phone_number'=> $request->get('customer_phone')
-          ]);
-          $customer->save();
-          return redirect('/customers')->with('success', 'cliente añadido correctamente');
+        ]);
+        $customer->save();
+        return redirect('/customers')->with('success', 'cliente añadido correctamente');
     }
 
     protected function edit($id)
