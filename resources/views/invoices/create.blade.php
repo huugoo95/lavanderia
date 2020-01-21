@@ -1,4 +1,5 @@
 @extends('layout')
+
 @section('content')
 <style>
   .uper {
@@ -7,7 +8,7 @@
 </style>
 <div class="card uper">
   <div class="card-header">
-    Editar servicio
+    Añadir servicio
   </div>
   <div class="card-body">
     @if ($errors->any())
@@ -19,22 +20,21 @@
         </ul>
       </div><br />
     @endif
-      <form method="post" action="{{ route('services.update', $service->id) }}">
-        @method('PATCH')
-        @csrf
+      <form method="post" action="{{ route('services.store') }}">
+      @csrf
           <div class="form-group">
               <label for="service_name">Nombre:</label>
-              <input type="text" class="form-control" name="service_name" value="{{ $service->name }}" />
+              <input type="text" class="form-control" name="service_name"/>
           </div>
           <div class="form-group">
               <label for="service_description">Descripción:</label>
-              <input type="text" class="form-control" name="service_description" value="{{ $service->description }}" />
+              <input type="text" class="form-control" name="service_description"/>
           </div>
           <div class="form-group">
               <label for="service_price">Precio:</label>
-              <input type="text" class="form-control" name="service_price" value="{{ $service->price }}" />
+              <input type="text" class="form-control" name="service_price"/>
           </div>
-          <button type="submit" class="btn btn-primary">Actualizar servicio</button>
+          <button type="submit" class="btn btn-primary">Añadir servicio</button>
       </form>
   </div>
 </div>
