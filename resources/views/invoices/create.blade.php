@@ -8,7 +8,7 @@
 </style>
 <div class="card uper">
   <div class="card-header">
-    Añadir servicio
+    Añadir factura
   </div>
   <div class="card-body">
     @if ($errors->any())
@@ -18,23 +18,34 @@
               <li>{{ $error }}</li>
             @endforeach
         </ul>
-      </div><br />
+      </div><br/>
     @endif
-      <form method="post" action="{{ route('services.store') }}">
+      <form method="post" action="{{ route('invoices.store') }}">
       @csrf
           <div class="form-group">
-              <label for="service_name">Nombre:</label>
-              <input type="text" class="form-control" name="service_name"/>
+              <label for="invoice_customer">Cliente:</label>
+              <select class="form-control" name="invoice_customer">
+              @foreach ($customers->all() as $customer)
+                <option value="{{$customer->id}}">{{ $customer->name . " " .  $customer->address}} </option>
+              @endforeach
+              </select>              
           </div>
           <div class="form-group">
-              <label for="service_description">Descripción:</label>
-              <input type="text" class="form-control" name="service_description"/>
+              <label for="invoice_service">Servicio  :</label>
+              <select class="form-control" name="invoice_service">
+              @foreach ($services->all() as $service)
+                <option value="{{$service->id}}">{{ $service->name . " " .  $service->address}} </option>
+              @endforeach
+              </select>              
           </div>
           <div class="form-group">
-              <label for="service_price">Precio:</label>
-              <input type="text" class="form-control" name="service_price"/>
+          <label for="invoice_occasional">Envío ocasional :</label>
+            <select class="form-control" name="invoice_occasional">
+              <option value="1">Envío puntual </option>
+              <option value="0">Envío periódico </option>
+            </select>
           </div>
-          <button type="submit" class="btn btn-primary">Añadir servicio</button>
+          <button type="submit" class="btn btn-primary">Añadir factura</button>
       </form>
   </div>
 </div>

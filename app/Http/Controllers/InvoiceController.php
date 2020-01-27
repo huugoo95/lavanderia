@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\InvoiceRequest;
 use App\Invoice;
+use App\Customer;
+use App\Service;
 
 class InvoiceController extends Controller
 {
@@ -20,7 +22,9 @@ class InvoiceController extends Controller
      */
     protected function create()
     {
-        return view('invoices/create');
+        $customers = Customer::all();        
+        $services = Service::all();        
+        return view('invoices/create', compact('customers'), compact('services'));
     }
 
     protected function store(InvoiceRequest $request)
@@ -28,9 +32,9 @@ class InvoiceController extends Controller
         $validated = $request->validated();
     
         $invoice = new Invoice([
-            'name' => $request->get('invoice_name'),
-            'description'=> $request->get('invoice_description'),
-            'price'=> $request->get('invoice_price')
+            'customer_id' => $request->get('invoice_customer'),
+            'service_id' => $request->get('invoice_service'),
+            'occasional' => $request->get('invoice_occasional')
         ]);
         $invoice->save();
         return redirect('/invoices')->with('success', 'Factura añadida correctamente');

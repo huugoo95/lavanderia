@@ -19,20 +19,20 @@
         </ul>
       </div><br />
     @endif
-      <form method="post" action="{{ route('services.update', $service->id) }}">
+      <form method="post" action="{{ route('invoices.update', $invoice->id) }}">
         @method('PATCH')
         @csrf
           <div class="form-group">
-              <label for="service_name">Nombre:</label>
-              <input type="text" class="form-control" name="service_name" value="{{ $service->name }}" />
+              <label for="invoice_name">Nombre:</label>
+              <input type="text" class="form-control" name="invoice_<name" value="{{ $invoice->name }}" />
           </div>
           <div class="form-group">
-              <label for="service_description">Descripción:</label>
-              <input type="text" class="form-control" name="service_description" value="{{ $service->description }}" />
+              <label for="invoice_description">Descripción:</label>
+              <input type="text" class="form-control" name="invoice_description" value="{{ $invoice->description }}" />
           </div>
           <div class="form-group">
-              <label for="service_price">Precio:</label>
-              <input type="text" class="form-control" name="service_price" value="{{ $service->price }}" />
+              <label for="invoice_price">Precio:</label>
+              <input type="text" class="form-control" name="invoice_price" value="{{ $invoice->price }}" />
           </div>
           <button type="submit" class="btn btn-primary">Actualizar servicio</button>
       </form>
