@@ -18,7 +18,7 @@ class CreateInvoicesTable extends Migration
             $table->timestamps();
             $table->integer('service_id')->unsigned();
             $table->integer('customer_id')->unsigned();
-            $table->boolean("occasional")->default(true);
+            $table->boolean("regular")->default(true);
         });
 
 

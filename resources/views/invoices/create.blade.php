@@ -39,10 +39,10 @@
               </select>              
           </div>
           <div class="form-group">
-          <label for="invoice_occasional">Envío ocasional :</label>
-            <select class="form-control" name="invoice_occasional">
-              <option value="1">Envío puntual </option>
-              <option value="0">Envío periódico </option>
+          <label for="invoice_regular">Envío periódico :</label>
+            <select class="form-control" name="invoice_regular">
+              <option value="1">Envío periódico </option>
+              <option value="0">Envío puntual </option>
             </select>
           </div>
           <button type="submit" class="btn btn-primary">Añadir factura</button>

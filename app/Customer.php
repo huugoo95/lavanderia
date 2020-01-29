@@ -23,4 +23,9 @@ class Customer extends Model
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function invoice()
+    {
+        return $this->hasMany('App\Invoice');
+    }
 }

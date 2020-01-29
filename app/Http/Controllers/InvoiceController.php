@@ -24,7 +24,7 @@ class InvoiceController extends Controller
     {
         $customers = Customer::all();        
         $services = Service::all();        
-        return view('invoices/create', compact('customers'), compact('services'));
+        return view('invoices/create')->with( compact('customers','services'));
     }
 
     protected function store(InvoiceRequest $request)
@@ -34,7 +34,7 @@ class InvoiceController extends Controller
         $invoice = new Invoice([
             'customer_id' => $request->get('invoice_customer'),
             'service_id' => $request->get('invoice_service'),
-            'occasional' => $request->get('invoice_occasional')
+            'regular' => $request->get('invoice_regular')
         ]);
         $invoice->save();
         return redirect('/invoices')->with('success', 'Factura añadida correctamente');
@@ -42,8 +42,11 @@ class InvoiceController extends Controller
 
     protected function edit($id)
     {
-        $invoice = Invoice::find($id);        
-        return view('invoices.edit', compact('invoice'));
+        $invoice = Invoice::find($id);   
+     
+        $customers = Customer::all();        
+        $services = Service::all();   
+        return view('invoices.edit')->with(compact('invoice', 'customers','services'));
         
     }
 
@@ -52,9 +55,9 @@ class InvoiceController extends Controller
         $validated = $request->validated();
 
         $invoice = Invoice::find($id);
-        $invoice->name = $request->get('invoice_name');
-        $invoice->description = $request->get('invoice_description');
-        $invoice->price = $request->get('invoice_price');
+        $invoice->customer_id = $request->get('invoice_customer');
+        $invoice->service_id = $request->get('invoice_service');
+        $invoice->regular = $request->get('invoice_regular');
         $invoice->save();
 
         return redirect('/invoices')->with('success', 'Factura modificada correctamente');
@@ -65,6 +68,7 @@ class InvoiceController extends Controller
         $invoice = Invoice::find($id);
         $invoice->delete();
 
-        return redirect('/invoices')->with('success', 'Factura borrado correctamente');
+        return redirect('/invoices')->with('success', 'Factura borrada correctamente');
     }
+
 }
