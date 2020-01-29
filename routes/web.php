@@ -26,3 +26,5 @@ Route::get('/users', 'UserController@show');
 Route::resource('customers', 'CustomerController');
 Route::resource('services', 'ServiceController');
 Route::resource('invoices', 'InvoiceController');
+Route::resource('invoiceLogs', 'InvoiceLogController');
+

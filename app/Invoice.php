@@ -11,17 +11,21 @@ class Invoice extends Model
     * @var array
     */
     protected $fillable = [
-        'id', 'occasional'
+        'id', 'regular', 'customer_id', 'service_id'
+    ];
+
+    protected $casts = [
+        'is_regular' => 'boolean',
     ];
 
     public function customer()
     {
-        return $this->hasOne('App\Customer');
+        return $this->belongsTo('App\Customer');
     }
     
     public function service()
     {
-        return $this->hasOne('App\Service');
+        return $this->belongsTo('App\Service');
     }
 
     /**
@@ -32,4 +36,5 @@ class Invoice extends Model
     protected $hidden = [
         
     ];
+
 }

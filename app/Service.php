@@ -15,4 +15,8 @@ class Service extends Model
         'name', 'description', 'price'
     ];
 
+        public function invoice()
+    {
+        return $this->hasMany('App\Invoice');
+    }
 }
