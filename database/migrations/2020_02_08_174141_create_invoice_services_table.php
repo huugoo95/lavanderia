@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInvoiceLogsTable extends Migration
+class CreateInvoiceServicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateInvoiceLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('invoice_logs', function (Blueprint $table) {
+        Schema::create('invoice_services', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('invoice_id')->unsigned();
+            $table->integer('service_id')->unsigned();
             $table->timestamps();
-            $table->integer("week_number");
-            $table->integer("year");
-            $table->integer("invoice_id")->unsigned();
         });
 
-        Schema::table('invoice_logs', function ($table) {
+        Schema::table('invoice_services', function ($table) {
             $table->foreign('invoice_id')->references('id')->on('invoices');
+            $table->foreign('service_id')->references('id')->on('services');
         });
     }
 
@@ -33,6 +33,6 @@ class CreateInvoiceLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoice_logs');
+        Schema::dropIfExists('invoice_services');
     }
 }

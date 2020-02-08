@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Customer;
 use App\Http\Requests\InvoiceRequest;
 use App\Invoice;
-use App\Customer;
+use App\InvoiceService;
 use App\Service;
 
 class InvoiceController extends Controller
 {
     protected function index()
     {
-        $invoices = Invoice::all();
-
+        $invoices = Invoice::with('services')->get();
         return view('invoices.index', compact('invoices'));
     }
     /**
@@ -22,32 +21,38 @@ class InvoiceController extends Controller
      */
     protected function create()
     {
-        $customers = Customer::all();        
-        $services = Service::all();        
-        return view('invoices/create')->with( compact('customers','services'));
+        $customers = Customer::all();
+        $services = Service::all();
+        return view('invoices/create')->with(compact('customers', 'services'));
     }
 
     protected function store(InvoiceRequest $request)
     {
         $validated = $request->validated();
-    
+
         $invoice = new Invoice([
             'customer_id' => $request->get('invoice_customer'),
-            'service_id' => $request->get('invoice_service'),
-            'regular' => $request->get('invoice_regular')
+            'regular' => $request->get('invoice_regular'),
         ]);
         $invoice->save();
+
+        foreach ($request->get('services') as $service) {
+            $invoiceService = new InvoiceService([
+                'service_id' => $service,
+                'invoice_id' => $invoice->id,
+            ]);
+            $invoiceService->save();
+        }
         return redirect('/invoices')->with('success', 'Factura añadida correctamente');
     }
 
     protected function edit($id)
     {
-        $invoice = Invoice::find($id);   
-     
-        $customers = Customer::all();        
-        $services = Service::all();   
-        return view('invoices.edit')->with(compact('invoice', 'customers','services'));
-        
+        $invoice = Invoice::find($id);
+
+        $customers = Customer::all();
+        $services = Service::all();
+        return view('invoices.edit')->with(compact('invoice', 'customers', 'services'));
     }
 
     public function update(InvoiceRequest $request, $id)
@@ -71,4 +76,20 @@ class InvoiceController extends Controller
         return redirect('/invoices')->with('success', 'Factura borrada correctamente');
     }
 
+    public function sendInvoice($id)
+    {
+        $invoice = Invoice::find($id);
+        /*
+    $mytime = Carbon\Carbon::now();
+    return $mytime;
+    echo $mytime->toDateTimeString();
+    $week = $date->format("W");
+
+    $invoiceLog = new InvoiceLog([
+    'invoice_id' => $id,
+    'week_number' => $request->get('invoice_service'),
+    'year' => $request->get('invoice_regular')
+    ]);
+     */
+    }
 }

@@ -23,11 +23,11 @@
         <tr>
           <td>id</td>
           <td>CIF</td>
-          <td>NAME</td>
-          <td>email</td>
-          <td>address</td>
-          <td>phone</td>
-          <td colspan="2">Action</td>
+          <td>Nombre</td>
+          <td>Email</td>
+          <td>Dirección</td>
+          <td>Número de teléfono</td>
+          <td colspan="2">Acciones</td>
         </tr>
     </thead>
     <tbody>
@@ -39,12 +39,12 @@
             <td>{{$customer->email}}</td>
             <td>{{$customer->address}}</td>
             <td>{{$customer->phone_number}}</td>
-            <td><a href="{{ route('customers.edit',$customer->id)}}" class="btn btn-primary">Edit</a></td>
+            <td><a href="{{ route('customers.edit',$customer->id)}}" class="btn btn-primary">Editar</a></td>
             <td>
                 <form action="{{ route('customers.destroy', $customer->id)}}" method="post">
                   @csrf
                   @method('DELETE')
-                  <button class="btn btn-danger" type="submit">Delete</button>
+                  <button class="btn btn-danger" type="submit">Eliminar</button>
                 </form>
             </td>
         </tr>
