@@ -76,9 +76,9 @@ class InvoiceController extends Controller
         return redirect('/invoices')->with('success', 'Factura borrada correctamente');
     }
 
-    public function sendInvoice($id)
+    public function preview(Invoice $invoice)
     {
-        $invoice = Invoice::find($id);
+        return view('invoices.preview', compact('invoice'));
         /*
     $mytime = Carbon\Carbon::now();
     return $mytime;

@@ -44,7 +44,7 @@
               <td>Envío manual</td>
             @endif
             <td><a href="{{ route('invoices.edit',$invoice->id)}}" class="btn btn-primary">Editar</a></td>
-            <td><a href="{{ route('invoices.send', $invoice->id)}}" class="btn btn-success">Enviar factura</a></td>
+            <td><a href="{{ route('invoices.preview', $invoice->id)}}" class="btn btn-success">Previsualizar factura</a></td>
             <td>
                 <form action="{{ route('invoices.destroy', $invoice->id)}}" method="post">
                   @csrf
