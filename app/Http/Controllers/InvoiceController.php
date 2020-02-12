@@ -7,6 +7,8 @@ use App\Http\Requests\InvoiceRequest;
 use App\Invoice;
 use App\InvoiceService;
 use App\Service;
+use Mail;
+use PDF;
 
 class InvoiceController extends Controller
 {
@@ -79,17 +81,42 @@ class InvoiceController extends Controller
     public function preview(Invoice $invoice)
     {
         return view('invoices.preview', compact('invoice'));
-        /*
-    $mytime = Carbon\Carbon::now();
-    return $mytime;
-    echo $mytime->toDateTimeString();
-    $week = $date->format("W");
+    }
 
-    $invoiceLog = new InvoiceLog([
-    'invoice_id' => $id,
-    'week_number' => $request->get('invoice_service'),
-    'year' => $request->get('invoice_regular')
-    ]);
-     */
+    public function send(Invoice $invoice)
+    {
+        $pdf = \PDF::loadView('invoices.preview', compact('invoice'));
+        $invoice = Invoice::find(13);
+
+        $data = [];
+        //$pdf->save(storage_path() . 'invoice.pdf');
+        //\Mail::to("huugoo95@gmail.com")->send(new );
+        Mail::send('mail', $data, function ($message) use ($data, $pdf) {
+            $message->to('huugoo95@gmail.com', 'hugo')
+                ->subject('asunto')
+                ->attachData($pdf->output(), "invoice.pdf");
+            });
+
+        /*try {
+            Mail::send('mails.mail', $data, function ($message) use ($data, $pdf) {
+                $message->to($data["email"], $data["client_name"])
+                    ->subject($data["subject"])
+                    ->attachData($pdf->output(), "invoice.pdf");
+            });
+        } catch (JWTException $exception) {
+            $this->serverstatuscode = "0";
+            $this->serverstatusdes = $exception->getMessage();
+        }
+
+        if (Mail::failures()) {
+            $this->statusdesc = "Error sending mail";
+            $this->statuscode = "0";
+
+        } else {
+
+            $this->statusdesc = "Message sent Succesfully";
+            $this->statuscode = "1";
+        }*/
+        return response()->json(compact('this'));
     }
 }

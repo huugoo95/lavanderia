@@ -45,7 +45,6 @@
           <td>Cantidad</td>
           <td>Precio</td>
           <td>Importe</td>
-          <td colspan="3">Acciones</td>
         </tr>
     </thead>
     <tbody>
