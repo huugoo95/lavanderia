@@ -99,12 +99,12 @@ class InvoiceController extends Controller
         $data = ['date' => date('Y-m-d H:i:s')];
 
         try {
-            /*Mail::send('mails.InvoiceMonthly', $data, function ($message) use ($pdf, $data) {
-        $message->to(env('OWNER_EMAIL'))
-        ->cc(env('OWNER_EMAIL_CC'))
-        ->subject('Factura mensual')
-        ->attachData($pdf->output(), "invoice.pdf");
-        });*/
+            Mail::send('mails.InvoiceMonthly', $data, function ($message) use ($pdf, $data) {
+                $message->to(env('OWNER_EMAIL'))
+                    ->cc(env('OWNER_EMAIL_CC'))
+                    ->subject('Factura mensual')
+                    ->attachData($pdf->output(), "invoice.pdf");
+            });
         } catch (JWTException $exception) {
             $this->serverstatuscode = "0";
             $this->serverstatusdes = $exception->getMessage();
