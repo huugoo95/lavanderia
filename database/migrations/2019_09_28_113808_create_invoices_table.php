@@ -16,14 +16,12 @@ class CreateInvoicesTable extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->integer('service_id')->unsigned();
             $table->integer('customer_id')->unsigned();
             $table->boolean("regular")->default(true);
+            $table->softDeletes();
         });
 
-
-        Schema::table('invoices', function($table) {            
-            $table->foreign('service_id')->references('id')->on('services');
+        Schema::table('invoices', function ($table) {
             $table->foreign('customer_id')->references('id')->on('customers');
         });
     }

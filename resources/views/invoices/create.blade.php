@@ -28,15 +28,15 @@
               @foreach ($customers->all() as $customer)
                 <option value="{{$customer->id}}">{{ $customer->name . " " .  $customer->address}} </option>
               @endforeach
-              </select>              
+              </select>
           </div>
           <div class="form-group">
-              <label for="invoice_service">Servicio  :</label>
-              <select class="form-control" name="invoice_service">
+          <label for="services">Servicios  :</label></br>
+          <select multiple id="services" name="services[]" class="form-control">
               @foreach ($services->all() as $service)
-                <option value="{{$service->id}}">{{ $service->name . " " .  $service->address}} </option>
+                <option value="{{$service->id}}">{{$service->name}} [ {{$service->price}} euros ] </option>
               @endforeach
-              </select>              
+              </select>
           </div>
           <div class="form-group">
           <label for="invoice_regular">Envío periódico :</label>

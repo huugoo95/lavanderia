@@ -11,7 +11,7 @@ class Invoice extends Model
     * @var array
     */
     protected $fillable = [
-        'id', 'regular', 'customer_id', 'service_id'
+        'id', 'regular', 'customer_id'
     ];
 
     protected $casts = [
@@ -20,14 +20,18 @@ class Invoice extends Model
 
     public function customer()
     {
-        return $this->belongsTo('App\Customer');
+        return $this->belongsTo(Customer::class);
     }
     
-    public function service()
+    public function services()
     {
-        return $this->belongsTo('App\Service');
+        return $this->belongsToMany(Service::class, 'invoice_services');
     }
 
+    public function logs()
+    {
+        return $this->hasMany(InvoiceLog::class, 'invoice_id');
+    }
     /**
     * The attributes that should be hidden for arrays.
     *

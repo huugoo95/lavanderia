@@ -35,16 +35,12 @@
               </select>              
           </div>
           <div class="form-group">
-              <label for="invoice_service">Servicio  :</label>
-              <select class="form-control" name="invoice_service">
+          <label for="services">Servicios  :</label></br>
+          <select multiple id="services" name="services[]" class="form-control">
               @foreach ($services->all() as $service)
-                @if ($service->id == $invoice->service_id)
-                  <option value="{{$service->id}}" selected >{{ $service->name . " " .  $service->address}} </option>
-                @else
-                  <option value="{{$service->id}}">{{ $service->name . " " .  $service->address}} </option>
-                @endif              
+                <option value="{{$service->id}}">{{$service->name}} [ {{$service->price}} euros ] </option>
               @endforeach
-              </select>              
+              </select>
           </div>
           <div class="form-group">
           <label for="invoice_regular">Envío regular :</label>

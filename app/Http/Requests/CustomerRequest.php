@@ -26,7 +26,7 @@ class CustomerRequest extends FormRequest
         return [
             'customer_name'=>'required',
             'customer_cif'=>'required',
-            'email'=> 'required|email',
+            'customer_email'=> 'required|email',
             'customer_address'=> 'required',
             'phone_number' => 'integer'
         ];

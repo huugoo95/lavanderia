@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests\CustomerRequest;
 use App\Customer;
+use App\Http\Requests\CustomerRequest;
 
 class CustomerController extends Controller
 {
@@ -14,10 +13,7 @@ class CustomerController extends Controller
 
         return view('customers.index', compact('customers'));
     }
-    /**
-     * Return a register view
-     *
-     */
+    
     protected function create()
     {
         return view('customers/create');
@@ -26,13 +22,13 @@ class CustomerController extends Controller
     protected function store(CustomerRequest $request)
     {
         $validated = $request->validated();
-    
+
         $customer = new Customer([
             'name' => $request->get('customer_name'),
-            'cif'=> $request->get('customer_cif'),
-            'email'=> $request->get('customer_email'),
-            'address'=> $request->get('customer_address'),
-            'phone_number'=> $request->get('customer_phone')
+            'cif' => $request->get('customer_cif'),
+            'email' => $request->get('customer_email'),
+            'address' => $request->get('customer_address'),
+            'phone_number' => $request->get('customer_phone'),
         ]);
         $customer->save();
         return redirect('/customers')->with('success', 'cliente añadido correctamente');
@@ -40,9 +36,8 @@ class CustomerController extends Controller
 
     protected function edit($id)
     {
-        $customer = Customer::find($id);        
+        $customer = Customer::find($id);
         return view('customers.edit', compact('customer'));
-        
     }
 
     public function update(CustomerRequest $request, $id)

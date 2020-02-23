@@ -12,10 +12,10 @@ class Service extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'price'
+        'name', 'description', 'price',
     ];
 
-        public function invoice()
+    public function invoice()
     {
         return $this->hasMany('App\Invoice');
     }

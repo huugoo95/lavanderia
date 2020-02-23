@@ -23,23 +23,23 @@
         @method('PATCH')
         @csrf
         <div class="form-group">
-          <label for="name">Name:</label>
+          <label for="name">Nombre de cliente:</label>
           <input type="text" class="form-control" name="customer_name" value={{ $customer->name }} >
         </div>
         <div class="form-group">
-              <label for="cif">cif :</label>
+              <label for="cif">CIF:</label>
               <input type="text" class="form-control" name="customer_cif" value={{ $customer->cif }}>
           </div>
           <div class="form-group">
-              <label for="email">email :</label>
+              <label for="email">Email:</label>
               <input type="text" class="form-control" name="customer_email" value={{ $customer->email }} >
           </div>
           <div class="form-group">
-              <label for="address">address:</label>
+              <label for="address">Dirección:</label>
               <input type="text" class="form-control" name="customer_address" value={{ $customer->address }}>
           </div>
           <div class="form-group">
-              <label for="phone">phone number:</label>
+              <label for="phone">Número de teléfono:</label>
               <input type="text" class="form-control" name="customer_phone" value={{ $customer->phone_number }}>
           </div>
           
