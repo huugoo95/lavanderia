@@ -28,6 +28,10 @@ class Invoice extends Model
         return $this->belongsToMany(Service::class, 'invoice_services');
     }
 
+    public function logs()
+    {
+        return $this->hasMany(InvoiceLog::class, 'invoice_id');
+    }
     /**
     * The attributes that should be hidden for arrays.
     *

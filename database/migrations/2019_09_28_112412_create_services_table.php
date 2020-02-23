@@ -19,6 +19,7 @@ class CreateServicesTable extends Migration
             $table->string("name");
             $table->string("description");
             $table->float("price");
+            $table->softDeletes();
         });
     }
 

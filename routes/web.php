@@ -27,4 +27,4 @@ Route::resource('customers', 'CustomerController');
 Route::resource('services', 'ServiceController');
 Route::resource('invoices', 'InvoiceController');
 Route::get('/invoices/{invoice}/preview', 'InvoiceController@preview')->name('invoices.preview');
-Route::get('/invoices/{invoice}/send', 'InvoiceController@send')->name('invoice.send');
+Route::post('/invoices/{invoice}/send', 'InvoiceController@send')->name('invoices.send');

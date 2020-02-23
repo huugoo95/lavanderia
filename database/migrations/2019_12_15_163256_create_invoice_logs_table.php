@@ -16,8 +16,6 @@ class CreateInvoiceLogsTable extends Migration
         Schema::create('invoice_logs', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->integer("week_number");
-            $table->integer("year");
             $table->integer("invoice_id")->unsigned();
         });
 

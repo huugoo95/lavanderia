@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Customer;
 use App\Http\Requests\InvoiceRequest;
+use App\Http\Traits\GetWeeksTrait;
 use App\Invoice;
+use App\InvoiceLog;
 use App\InvoiceService;
 use App\Service;
 use Mail;
@@ -12,9 +14,10 @@ use PDF;
 
 class InvoiceController extends Controller
 {
+    use GetWeeksTrait;
     protected function index()
     {
-        $invoices = Invoice::with('services')->get();
+        $invoices = Invoice::with('services', 'logs')->get();
         return view('invoices.index', compact('invoices'));
     }
     /**
@@ -59,12 +62,17 @@ class InvoiceController extends Controller
 
     public function update(InvoiceRequest $request, $id)
     {
-        $validated = $request->validated();
-
         $invoice = Invoice::find($id);
         $invoice->customer_id = $request->get('invoice_customer');
-        $invoice->service_id = $request->get('invoice_service');
         $invoice->regular = $request->get('invoice_regular');
+        InvoiceService::where('invoice_id', $id)->delete();
+        foreach ($request->get('services') as $service) {
+            $invoiceService = new InvoiceService([
+                'service_id' => $service,
+                'invoice_id' => $invoice->id,
+            ]);
+            $invoiceService->save();
+        }
         $invoice->save();
 
         return redirect('/invoices')->with('success', 'Factura modificada correctamente');
@@ -80,29 +88,23 @@ class InvoiceController extends Controller
 
     public function preview(Invoice $invoice)
     {
-        return view('invoices.preview', compact('invoice'));
+        $mondays = $this->getMondaysOfMonth();
+        return view('invoices.preview', compact('invoice', 'mondays'));
     }
 
     public function send(Invoice $invoice)
     {
-        $pdf = \PDF::loadView('invoices.preview', compact('invoice'));
-        $invoice = Invoice::find(13);
+        $mondays = $this->getMondaysOfMonth();
+        $pdf = \PDF::loadView('invoices.preview', compact('invoice', 'mondays'));
+        $data = ['date' => date('Y-m-d H:i:s')];
 
-        $data = [];
-        //$pdf->save(storage_path() . 'invoice.pdf');
-        //\Mail::to("huugoo95@gmail.com")->send(new );
-        Mail::send('mail', $data, function ($message) use ($data, $pdf) {
-            $message->to('huugoo95@gmail.com', 'hugo')
-                ->subject('asunto')
-                ->attachData($pdf->output(), "invoice.pdf");
-            });
-
-        /*try {
-            Mail::send('mails.mail', $data, function ($message) use ($data, $pdf) {
-                $message->to($data["email"], $data["client_name"])
-                    ->subject($data["subject"])
-                    ->attachData($pdf->output(), "invoice.pdf");
-            });
+        try {
+            /*Mail::send('mails.InvoiceMonthly', $data, function ($message) use ($pdf, $data) {
+        $message->to(env('OWNER_EMAIL'))
+        ->cc(env('OWNER_EMAIL_CC'))
+        ->subject('Factura mensual')
+        ->attachData($pdf->output(), "invoice.pdf");
+        });*/
         } catch (JWTException $exception) {
             $this->serverstatuscode = "0";
             $this->serverstatusdes = $exception->getMessage();
@@ -111,12 +113,13 @@ class InvoiceController extends Controller
         if (Mail::failures()) {
             $this->statusdesc = "Error sending mail";
             $this->statuscode = "0";
-
         } else {
-
             $this->statusdesc = "Message sent Succesfully";
             $this->statuscode = "1";
-        }*/
+            InvoiceLog::create([
+                'invoice_id' => $invoice->id,
+            ]);
+        }
         return response()->json(compact('this'));
     }
 }

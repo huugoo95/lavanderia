@@ -44,12 +44,15 @@
               <td>Envío manual</td>
             @endif
             <td><a href="{{ route('invoices.edit',$invoice->id)}}" class="btn btn-primary">Editar</a></td>
-            <td><a href="{{ route('invoices.preview', $invoice->id)}}" class="btn btn-success">Previsualizar factura</a></td>
+            <td><a href="{{ route('invoices.preview', $invoice->id)}}" class="btn btn-success">Previsualizar factura</a></td>           
             <td>
-                <form action="{{ route('invoices.destroy', $invoice->id)}}" method="post">
+                <form action="{{ route('invoices.send', $invoice->id)}}" method="post">
                   @csrf
-                  @method('DELETE')
-                  <button class="btn btn-danger" type="submit">Borrar</button>
+                  @if ($invoice->logs->first())
+                    <button class="btn btn-warning" type="submit">Enviar (últ: {{$invoice->logs->last()->created_at->format('Y-m-d')}})</button>
+                  @else
+                    <button class="btn btn-warning" type="submit">Enviar (Todavía ninguna enviada))</button>
+                  @endif
                 </form>
             </td>
         </tr>

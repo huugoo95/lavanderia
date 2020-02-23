@@ -18,6 +18,7 @@ class CreateInvoicesTable extends Migration
             $table->timestamps();
             $table->integer('customer_id')->unsigned();
             $table->boolean("regular")->default(true);
+            $table->softDeletes();
         });
 
         Schema::table('invoices', function ($table) {
