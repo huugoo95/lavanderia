@@ -42,6 +42,24 @@
             <td>{{$service->price * $mondays}}</td>
         </tr>
         @endforeach
+        <tr>
+          <td></td>
+          <td></td>
+          <td>Subtotal</td>
+          <td>euros</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>IVA</td>
+          <td>{{env('TAX') * 100}} %</td>
+          <td>euros</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td>Total euros</td>
+          <td>euros</td>
+        </tr>
     </tbody>
   </table>
 
