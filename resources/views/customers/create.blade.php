@@ -8,7 +8,7 @@
 </style>
 <div class="card uper">
   <div class="card-header">
-    Add Customer
+    Añadir cliente
   </div>
   <div class="card-body">
     @if ($errors->any())
@@ -42,7 +42,7 @@
               <label for="phone">Número de teléfono:</label>
               <input type="text" class="form-control" name="customer_phone"/>
           </div>
-          <button type="submit" class="btn btn-primary">Add customer</button>
+          <button type="submit" class="btn btn-primary">Añadir cliente</button>
       </form>
   </div>
 </div>

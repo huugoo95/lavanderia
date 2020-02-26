@@ -12,7 +12,7 @@
     </div><br />
   @endif
   <hr>
-  <div class="d-flex p-2">
+  <div >
     <h1>{{$invoice->customer->name}}</h1>
   </div>
   <div class="container">
@@ -34,6 +34,7 @@
         </tr>
     </thead>
     <tbody>
+        @php ($sumEuros = 0)
         @foreach($invoice->services as $service)
         <tr>
             <td>{{$service->name}}</td>
@@ -41,24 +42,25 @@
             <td>{{$service->price}}</td>
             <td>{{$service->price * $mondays}}</td>
         </tr>
+        @php ($sumEuros+=$service->price * $mondays)  
         @endforeach
         <tr>
           <td></td>
           <td></td>
           <td>Subtotal</td>
-          <td>euros</td>
+          <td>{{$sumEuros}}</td>
         </tr>
         <tr>
           <td></td>
           <td>IVA</td>
           <td>{{env('TAX') * 100}} %</td>
-          <td>euros</td>
+          <td>{{ (env('TAX')) * $sumEuros}}</td>
         </tr>
         <tr>
           <td></td>
           <td></td>
           <td>Total euros</td>
-          <td>euros</td>
+          <td>{{ (1 + env('TAX')) * $sumEuros}}</td>
         </tr>
     </tbody>
   </table>
