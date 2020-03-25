@@ -11,20 +11,20 @@
 |
  */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('index');
-Route::get('login', function () {
-    return view('login');
+Auth::routes([
+    'register' => false,
+]);
+
+Route::group(['middleware' => ['auth']], function () {
+
+    Route::get('/', 'HomeController@index');
+    Route::get('/home', 'HomeController@index')->name('home');
+    //Route::get('/users', 'UserController@show');
+
+    Route::resource('customers', 'CustomerController');
+    Route::resource('services', 'ServiceController');
+    Route::resource('invoices', 'InvoiceController');
+
+    Route::get('/invoices/{invoice}/preview', 'InvoiceController@preview')->name('invoices.preview');
+    Route::post('/invoices/{invoice}/send', 'InvoiceController@send')->name('invoices.send');
 });
-
-Route::get('/register', 'Auth\RegisterController@create');
-Route::post('/register', 'Auth\RegisterController@store');
-
-Route::get('/users', 'UserController@show');
-
-Route::resource('customers', 'CustomerController');
-Route::resource('services', 'ServiceController');
-Route::resource('invoices', 'InvoiceController');
-Route::get('/invoices/{invoice}/preview', 'InvoiceController@preview')->name('invoices.preview');
-Route::post('/invoices/{invoice}/send', 'InvoiceController@send')->name('invoices.send');

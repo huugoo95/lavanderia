@@ -13,7 +13,7 @@
     </div><br />
   @endif
   <div class="d-flex justify-content-between">
-    <a  class="btn btn-secondary"  href="{{ route('index') }}">Menú principal</a>
+    <a  class="btn btn-secondary"  href="{{ route('home') }}">Menú principal</a>
     <a  class="btn btn-success" href="{{ route('services.create') }}">Añadir servicio</a>
   </div>
   <br>
